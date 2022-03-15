@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
-import localData from '../data.json'
+import localData from '../../data.json'
 import { DivCards } from './CardsStyle.js'
 
 export const Cards = () => {

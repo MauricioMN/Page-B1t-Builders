@@ -1,6 +1,6 @@
 import React from 'react'
-import { DescContent } from './DescContent'
-import { FormContent } from './FormContent'
+import { DescContent } from '../desc-content/DescContent'
+import { FormContent } from '../form-content/FormContent'
 import './Content.scss'
 
 export const Content = () => {

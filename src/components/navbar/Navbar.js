@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
-import logo from '../assets/imgs/Logo.svg'
-import IconEmail from '../assets/imgs/IconEmail.svg'
-import IconPhone from '../assets/imgs/IconTelefone.svg'
+import logo from '../../assets/imgs/Logo.svg'
+import IconEmail from '../../assets/imgs/IconEmail.svg'
+import IconPhone from '../../assets/imgs/IconTelefone.svg'
 import './Navbar.scss'
 
 export const Navbar = () => {

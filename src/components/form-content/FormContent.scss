@@ -37,7 +37,6 @@
                 left: 559.19px;
                 top: 354px;
                 background: #ffffff;
-                padding-top: 10px;
                 box-shadow: -5px 5px;
                 font-family: 'Roboto';
                 font-style: normal;
@@ -54,6 +53,14 @@
             }
         }
     }
+}
+
+.modal-content {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
 }
 
 @media (max-width: 375px) {

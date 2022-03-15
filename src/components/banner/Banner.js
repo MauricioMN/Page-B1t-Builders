@@ -11,7 +11,7 @@ export const Banner = () => {
           <span className='button-noaction'><strong>Data:</strong> 12/10/2025</span >
           <span className='button-noaction'><strong>Horário:</strong> 16h</span >
           <span className='button-noaction'><strong>Local:</strong> São Paulo</span >
-          <span className='button-action'><strong>INSCREVA-SE</strong></span >
+          <a className='button-action' href="#form"><strong>INSCREVA-SE</strong></a >
         </div>
       </div>
     </div>

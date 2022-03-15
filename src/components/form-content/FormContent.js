@@ -102,7 +102,7 @@ export const FormContent = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="main-form">
+      <div id="form" className="main-form">
         <div className="form-title">
           <h1>Inscreva-se gratuitamente</h1>
         </div>
