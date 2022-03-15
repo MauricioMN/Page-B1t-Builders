@@ -1,0 +1,23 @@
+[{
+        "id": 1,
+        "name": "Michael Summer",
+        "job": "Front-End Engineer",
+        "imageUrl": "images/MichaelSummer.png",
+        "imageAlt": "Imagem Palestrante"
+    },
+    {
+        "id": 2,
+        "name": "Erico Suarez",
+        "job": "Full Stack Developer ",
+        "imageUrl": "images/EricoSuarez.png",
+        "imageAlt": "Imagem Palestrante"
+
+    },
+    {
+        "id": 3,
+        "name": "Laura Motwani",
+        "job": "Art director ",
+        "imageUrl": "images/LauraMotwani.png",
+        "imageAlt": "Imagem Palestrante"
+    }
+]
