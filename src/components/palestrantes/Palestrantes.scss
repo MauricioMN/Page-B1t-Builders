@@ -66,3 +66,20 @@
         }
     }
 }
+
+@media (max-width: 375px) {
+    .content {
+        .content-items {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+            h1 {
+                font-size: 35px;
+            }
+            .subItem {
+                margin-top: 50px;
+                margin-left: -140px;
+            }
+        }
+    }
+}

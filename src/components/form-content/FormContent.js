@@ -5,6 +5,8 @@ import './FormContent.scss'
 
 export const FormContent = () => {
   const [lgShow, setLgShow] = useState(false)
+  const [showCepError, setShowCepError] = useState(false)
+  const [cepErrorMsg, setCepErrorMsg] = useState('')
   const handleShow = () => setLgShow(true)
   const estadoRef = useRef()
   const cidadeRef = useRef()
@@ -97,23 +99,34 @@ export const FormContent = () => {
   }
 
   //Consultar Api VIACEP e validar o cep enviado
-  function checkCEP(e, form) {
+  function checkCEP(e) {
     const cep = e.target.value.replace(/\D/g, '')
 
     if (cep !== '') {
       var validacep = /^[0-9]{8}$/
 
       if (validacep.test(cep)) {
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        fetch(`https://ws.apicep.com/cep/${cep}.json`)
           .then((res) => res.json())
           .then((data) => {
-            estadoRef.current.value = data.uf
-            cidadeRef.current.value = data.localidade
-            bairroRef.current.value = data.bairro
-            logradouroRef.current.value = data.logradouro
+            if (data.status == 200) {
+              estadoRef.current.value = data.state
+              cidadeRef.current.value = data.city
+              bairroRef.current.value = data.district
+              logradouroRef.current.value = data.address
+              setShowCepError(false)
+              setCepErrorMsg('')
+            } else {
+              setShowCepError(true)
+              setCepErrorMsg(data.message)
+            }
+          })
+          .catch((err) => {
+            console.log('erro', err)
           })
       } else {
-        alert('Formato de CEP inválido.')
+        setShowCepError(true)
+        setCepErrorMsg('CEP inválido')
       }
     }
   }
@@ -137,7 +150,7 @@ export const FormContent = () => {
         <div className="form-body">
           <div className="row">
             <div className="form-group col-md-6">
-              <label htmlFor="validationDefault01">Nome Completo</label>
+              <label htmlFor="validationDefault01">Nome Completo*</label>
               <input
                 type="text"
                 name="nome"
@@ -152,7 +165,7 @@ export const FormContent = () => {
             </div>
 
             <div className="form-group col-md-6">
-              <label htmlFor="validationDefault01">Telefone</label>
+              <label htmlFor="validationDefault01">Telefone*</label>
               <input
                 type="text"
                 onKeyUp={formatTelephone}
@@ -170,7 +183,7 @@ export const FormContent = () => {
           </div>
           <div className="row">
             <div className="form-group col-md-12 ">
-              <label htmlFor="validationDefault01">E-mail</label>
+              <label htmlFor="validationDefault01">E-mail*</label>
               <input
                 type="email"
                 name="email"
@@ -186,7 +199,10 @@ export const FormContent = () => {
           </div>
           <div className="row">
             <div className="form-group col-md-6">
-              <label htmlFor="validationDefault01">CEP</label>
+              <label htmlFor="validationDefault01">
+                CEP* 
+                <span> {showCepError ? cepErrorMsg : ''}</span>
+              </label>
               <input
                 type="text"
                 name="cep"
@@ -206,7 +222,7 @@ export const FormContent = () => {
             <div className="form-group col-md-6">
               <div className="input-container">
                 <div className="estado">
-                  <label htmlFor="validationDefault01">Estado </label>
+                  <label htmlFor="validationDefault01">Estado* </label>
 
                   <select
                     type="text"
@@ -230,7 +246,7 @@ export const FormContent = () => {
           </div>
           <div className="row">
             <div className="form-group col-md-6">
-              <label htmlFor="validationDefault01">Cidade</label>
+              <label htmlFor="validationDefault01">Cidade*</label>
               <input
                 type="text"
                 name="cidade"
@@ -242,7 +258,7 @@ export const FormContent = () => {
             </div>
 
             <div className="form-group col-md-6">
-              <label htmlFor="validationDefault01">Bairro</label>
+              <label htmlFor="validationDefault01">Bairro*</label>
               <input
                 type="text"
                 name="bairro"
@@ -255,7 +271,7 @@ export const FormContent = () => {
           </div>
           <div className="row">
             <div className="form-group col-md-12">
-              <label htmlFor="validationDefault01">Logradouro</label>
+              <label htmlFor="validationDefault01">Logradouro*</label>
               <input
                 type="text"
                 name="logradouro"

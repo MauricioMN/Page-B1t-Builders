@@ -64,6 +64,14 @@
     .main-content {
         .desc-content {
             align-items: center;
+            .content-title {
+                h1 {
+                    font-size: 35px;
+                }
+                .subItem {
+                    margin-left: 5px;
+                }
+            }
         }
         .descItems {
             margin-left: 5px !important;

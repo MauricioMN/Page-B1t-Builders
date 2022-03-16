@@ -6,12 +6,11 @@ import IconPhone from '../../assets/imgs/IconTelefone.svg'
 import './Navbar.scss'
 
 export const Navbar = () => {
+  const [openMenu, setOpenMenu] = useState(false)
 
-    const [openMenu, setOpenMenu] = useState(false)
-
-    const handleClick = () => {
-        setOpenMenu(!openMenu)
-    }
+  const handleClick = () => {
+    setOpenMenu(!openMenu)
+  }
 
   return (
     <div className="header">
@@ -20,20 +19,23 @@ export const Navbar = () => {
           <img src={logo} alt="logo" />
         </a>
         <div className="hamburger" onClick={handleClick}>
-            {openMenu ? (<FaTimes size={30} />) : ( <FaBars size={30} />) }
-         
+          {openMenu ? <FaTimes size={30} /> : <FaBars size={30} />}
         </div>
-        <ul className={openMenu ? "nav-menu active" : "nav-menu"}>
+        <ul className={openMenu ? 'nav-menu active' : 'nav-menu'}>
           <li className="nav-item">
             <div className="nav-container-icon">
-              <img src={IconEmail} alt="logo" className='icons' />
-              <a href="/"> E-mail</a>
+              <a href="/">
+                <img src={IconEmail} alt="logo" className="icons" />
+                E-mail
+              </a>
             </div>
           </li>
           <li className="nav-item">
             <div className="nav-container-icon">
-              <img src={IconPhone} alt="logo" className='icons' />
-              <a href="/">Telefone</a>
+              <a href="/">
+                <img src={IconPhone} alt="logo" className="icons" />
+                Telefone
+              </a>
             </div>
           </li>
         </ul>
