@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
+import statesData from '../../states.json'
 import './FormContent.scss'
 
 export const FormContent = () => {
@@ -204,15 +205,26 @@ export const FormContent = () => {
 
             <div className="form-group col-md-6">
               <div className="input-container">
-                <label htmlFor="validationDefault01">Estado </label>
-                <input
-                  type="text"
-                  name="estado"
-                  ref={estadoRef}
-                  id="validationDefault01"
-                  required
-                  className="form-control estado"
-                />
+                <div className="estado">
+                  <label htmlFor="validationDefault01">Estado </label>
+
+                  <select
+                    type="text"
+                    name="estado"
+                    ref={estadoRef}
+                    id="validationDefault01"
+                    required
+                    className="form-control"
+                  >
+                    {statesData.map((render, index) => {
+                      return (
+                        <option value={render.value} key={index}>
+                          {render.nome}
+                        </option>
+                      )
+                    })}
+                  </select>
+                </div>
               </div>
             </div>
           </div>

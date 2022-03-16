@@ -1,8 +1,9 @@
+@import '../../index.scss';
 .main-form {
     box-shadow: 26px 26px;
     width: 582px;
     height: 673px;
-    background: #f9c654;
+    background: var(--bgcolor-header);
     .form-title {
         padding: 20px 20px 50px 20px;
         text-align: center;
@@ -17,14 +18,39 @@
             padding-left: 5px;
             padding-right: 5px;
         }
-        input {
-            background: #f9c654;
+        input,
+        select {
+            background: var(--bgcolor-header);
             border: 1px solid #000000;
             box-sizing: border-box;
             border-radius: 4px;
             color: #000000;
             font-family: 'Roboto';
             font-style: normal;
+            &:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0 30px var(--bgcolor-header) inset;
+            }
+        }
+        .estado {
+            position: relative;
+            select {
+                appearance: none;
+                background: url('../../../public/images/arrowD.png') no-repeat center right;
+                background-position-x: 94.5%;
+                &:-webkit-autofill {
+                    -webkit-text-fill-color: #000000 !important;
+                }
+            }
+            &::before {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                right: 40px;
+                display: block;
+                height: 54%;
+                width: 1px;
+                background-color: #000000;
+            }
         }
         .button-submit {
             display: flex;
@@ -92,6 +118,11 @@
         width: 100%;
         box-shadow: none;
         .form-body {
+            .estado {
+                select {
+                    background-position-x: 96.5% !important;
+                }
+            }
             .button-submit {
                 .btn-submit {
                     margin-bottom: 30px;
@@ -106,6 +137,13 @@
         height: 100%;
         width: 100%;
         box-shadow: 26px 26px;
+        .form-body {
+            .estado {
+                select {
+                    background-position-x: 97% !important;
+                }
+            }
+        }
     }
 }
 
