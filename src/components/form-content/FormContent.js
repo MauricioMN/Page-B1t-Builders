@@ -3,8 +3,8 @@ import { Modal, Button } from 'react-bootstrap'
 import './FormContent.scss'
 
 export const FormContent = () => {
-  const [show, setShow] = useState(false)
-  const handleShow = () => setShow(true)
+  const [lgShow, setLgShow] = useState(false)
+  const handleShow = () => setLgShow(true)
   const estadoRef = useRef()
   const cidadeRef = useRef()
   const bairroRef = useRef()
@@ -22,39 +22,48 @@ export const FormContent = () => {
   })
 
   //validar mask campo telefone
-  function phoneMaskBrazil() {
+  function formatTelephone() {
     var key = window.event.key
     var element = window.event.target
     var isAllowed = /\d|Backspace|Tab/
     if (!isAllowed.test(key)) window.event.preventDefault()
 
     var inputValue = element.value
-    inputValue = inputValue.replace(/\D/g, '')
-    inputValue = inputValue.replace(/(^\d{2})(\d)/, '($1) $2')
-    inputValue = inputValue.replace(/(\d{4,5})(\d{4}$)/, '$1-$2')
+    inputValue = inputValue.toString().replace(/\D/g, '')
+    // Coloca parênteses em volta dos dois primeiros dígitos
+    inputValue = inputValue.replace(/^(\d\d)(\d)/g, '($1) $2')
+    // Número com 8 dígitos. Formato: (99) 9999-9999
+    if (inputValue.length < 14)
+      inputValue = inputValue.replace(/(\d{4})(\d)/, '$1-$2')
+    // Número com 9 dígitos. Formato: (99) 99999-9999
+    else inputValue = inputValue.replace(/(\d{5})(\d)/, '$1-$2')
 
     element.value = inputValue
   }
 
   function handleSubmit(event) {
-    event.preventDefault()
-    const estado = estadoRef.current.value
-    const cidade = cidadeRef.current.value
-    const bairro = bairroRef.current.value
-    const logradouro = logradouroRef.current.value
+    try {
+      event.preventDefault()
+      const estado = estadoRef.current.value
+      const cidade = cidadeRef.current.value
+      const bairro = bairroRef.current.value
+      const logradouro = logradouroRef.current.value
 
-    setForm({
-      ...form,
-      estado: estado,
-      cidade: cidade,
-      bairro: bairro,
-      logradouro: logradouro,
-    })
-    console.log('Form Data', form)
-    handleShow(true)
-    console.log('depois Form Data', form)
+      setForm({
+        ...form,
+        estado: estado,
+        cidade: cidade,
+        bairro: bairro,
+        logradouro: logradouro,
+      })
+      console.log('Form Data', form)
+      handleShow(true)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
+  //Func. Limpar o formulario ao ser enviado
   function clearForm() {
     const empty = {
       nome: '',
@@ -67,18 +76,26 @@ export const FormContent = () => {
       logradouro: '',
     }
 
-    setForm({...empty})
+    setForm({ ...empty })
     estadoRef.current.value = null
     cidadeRef.current.value = null
     bairroRef.current.value = null
     logradouroRef.current.value = null
   }
 
+  //Limpar form e fechar modal
   const handleClose = () => {
     clearForm()
-    setShow(false)
+    setLgShow(false)
   }
 
+  //Pegar o primeiro nome, remover espacos e colocar primeira letra maiuscula
+  const firstName = form.nome.trim().split(' ')
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1)
+  }
+
+  //Consultar Api VIACEP e validar o cep enviado
   function checkCEP(e, form) {
     const cep = e.target.value.replace(/\D/g, '')
 
@@ -98,6 +115,16 @@ export const FormContent = () => {
         alert('Formato de CEP inválido.')
       }
     }
+  }
+
+  //Formatar o campo Cep #####-###
+  function formatCep(e) {
+    e.currentTarget.maxLength = 9
+    let value = e.currentTarget.value
+    value = value.replace(/\D/g, '')
+    value = value.replace(/^(\d{5})(\d)/, '$1-$2')
+    e.currentTarget.value = value
+    return e
   }
 
   return (
@@ -127,7 +154,7 @@ export const FormContent = () => {
               <label htmlFor="validationDefault01">Telefone</label>
               <input
                 type="text"
-                onKeyDown={phoneMaskBrazil}
+                onKeyUp={formatTelephone}
                 name="telefone"
                 value={form.telefone}
                 onChange={(e) => {
@@ -167,8 +194,9 @@ export const FormContent = () => {
                   setForm({ ...form, cep: e.target.value })
                 }}
                 onBlur={checkCEP}
-                maxLength="8"
+                onKeyUp={formatCep}
                 id="validationDefault01"
+                maxLength="9"
                 required
                 className="form-control"
               />
@@ -233,14 +261,21 @@ export const FormContent = () => {
           </div>
         </div>
       </div>
-      <Modal show={show} onHide={handleClose}>
+      <Modal
+        size="lg"
+        show={lgShow}
+        onHide={handleClose}
+        aria-labelledby="example-modal-sizes-title-lg"
+      >
         <Modal.Header closeButton>
-          <Modal.Title>Inscrito com Sucesso!</Modal.Title>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            Inscrito com Sucesso!
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <strong>{form.nome}</strong>, será um prazer te encontrar em nosso
-          evento, estaremos enviando todas as orientações para seu e-mail:{' '}
-          {form.email} !
+          <strong>{capitalizeFirstLetter(firstName[0])}</strong>, será um prazer
+          te encontrar em nosso evento, estaremos enviando todas as orientações
+          para seu e-mail: {form.email} !
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
