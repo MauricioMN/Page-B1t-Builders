@@ -98,7 +98,7 @@ export const FormContent = () => {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
 
-  //Consultar Api VIACEP e validar o cep enviado
+  //Consultar Api APICep, validar o cep enviado
   function checkCEP(e) {
     const cep = e.target.value.replace(/\D/g, '')
 
@@ -174,6 +174,7 @@ export const FormContent = () => {
                 onChange={(e) => {
                   setForm({ ...form, telefone: e.target.value })
                 }}
+                minLength="14"
                 maxLength="15"
                 id="validationDefault01"
                 required
